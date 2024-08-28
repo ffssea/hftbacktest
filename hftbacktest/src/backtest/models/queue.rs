@@ -8,16 +8,7 @@ use crate::{
     backtest::BacktestError,
     depth::{MarketDepth, INVALID_MAX, INVALID_MIN},
     types::{
-        AnyClone,
-        Event,
-        OrdType,
-        Order,
-        OrderId,
-        Side,
-        Status,
-        TimeInForce,
-        BUY_EVENT,
-        SELL_EVENT,
+        AnyClone, Event, OrdType, Order, OrderId, Side, Status, TimeInForce, BUY_EVENT, SELL_EVENT,
     },
 };
 
@@ -666,6 +657,7 @@ where
             exec_price_tick: 0,
             local_timestamp: 0,
             maker: false,
+            reduce_only: false,
             order_type: OrdType::Limit,
             req: Status::None,
             status: Status::None,

@@ -22,16 +22,8 @@ use crate::{
     },
     depth::{HashMapMarketDepth, L2MarketDepth, L3MarketDepth, MarketDepth},
     prelude::{
-        Bot,
-        OrdType,
-        Order,
-        OrderId,
-        OrderRequest,
-        Side,
-        StateValues,
-        TimeInForce,
-        WaitOrderResponse,
-        UNTIL_END_OF_DATA,
+        Bot, OrdType, Order, OrderId, OrderRequest, Side, StateValues, TimeInForce,
+        WaitOrderResponse, UNTIL_END_OF_DATA,
     },
     types::{BuildError, Event},
 };
@@ -829,6 +821,7 @@ where
         price: f64,
         qty: f64,
         time_in_force: TimeInForce,
+        reduce_only: bool,
         order_type: OrdType,
         wait: bool,
     ) -> Result<bool, Self::Error> {
@@ -840,6 +833,7 @@ where
             qty,
             order_type,
             time_in_force,
+            reduce_only,
             self.cur_ts,
         )?;
 
@@ -860,6 +854,7 @@ where
         price: f64,
         qty: f64,
         time_in_force: TimeInForce,
+        reduce_only: bool,
         order_type: OrdType,
         wait: bool,
     ) -> Result<bool, Self::Error> {
@@ -871,6 +866,7 @@ where
             qty,
             order_type,
             time_in_force,
+            reduce_only,
             self.cur_ts,
         )?;
 
@@ -897,6 +893,7 @@ where
             order.qty,
             order.order_type,
             order.time_in_force,
+            order.reduce_only,
             self.cur_ts,
         )?;
 
@@ -1281,6 +1278,7 @@ where
         price: f64,
         qty: f64,
         time_in_force: TimeInForce,
+        reduce_only: bool,
         order_type: OrdType,
         wait: bool,
     ) -> Result<bool, Self::Error> {
@@ -1292,6 +1290,7 @@ where
             qty,
             order_type,
             time_in_force,
+            reduce_only,
             self.cur_ts,
         )?;
 
@@ -1312,6 +1311,7 @@ where
         price: f64,
         qty: f64,
         time_in_force: TimeInForce,
+        reduce_only: bool,
         order_type: OrdType,
         wait: bool,
     ) -> Result<bool, Self::Error> {
@@ -1323,6 +1323,7 @@ where
             qty,
             order_type,
             time_in_force,
+            reduce_only,
             self.cur_ts,
         )?;
 
@@ -1349,6 +1350,7 @@ where
             order.qty,
             order.order_type,
             order.time_in_force,
+            order.reduce_only,
             self.cur_ts,
         )?;
 

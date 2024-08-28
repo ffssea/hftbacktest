@@ -410,6 +410,7 @@ impl BinanceFuturesClient {
                             // Invalid information
                             q: Box::new(()),
                             maker: false,
+                            reduce_only: data.reduce_only,
                         },
                     )
                 })

@@ -15,8 +15,7 @@ use tracing::{error, info};
 use super::{
     msg::stream::{Data, Stream},
     rest::BinanceFuturesClient,
-    BinanceFuturesError,
-    OrderManagerWrapper,
+    BinanceFuturesError, OrderManagerWrapper,
 };
 use crate::{
     connector::binancefutures::{
@@ -25,14 +24,8 @@ use crate::{
     },
     live::Asset,
     types::{
-        Event,
-        LiveEvent,
-        Order,
-        Status,
-        LOCAL_ASK_DEPTH_EVENT,
-        LOCAL_BID_DEPTH_EVENT,
-        LOCAL_BUY_TRADE_EVENT,
-        LOCAL_SELL_TRADE_EVENT,
+        Event, LiveEvent, Order, Status, LOCAL_ASK_DEPTH_EVENT, LOCAL_BID_DEPTH_EVENT,
+        LOCAL_BUY_TRADE_EVENT, LOCAL_SELL_TRADE_EVENT,
     },
 };
 
@@ -332,7 +325,8 @@ pub async fn connect(
                                             order_type: data.order.order_type,
                                             // Invalid information
                                             q: Box::new(()),
-                                            maker: false
+                                            maker: false,
+                                            reduce_only: false,
                                         };
 
                                         let order = orders

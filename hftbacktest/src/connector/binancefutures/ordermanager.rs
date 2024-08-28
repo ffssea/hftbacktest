@@ -125,6 +125,7 @@ impl OrderManager {
             // Invalid information
             q: Box::new(()),
             maker: false,
+            reduce_only: order.reduce_only,
         };
         self.update_from_rest(asset_no, resp.client_order_id, order)
     }
@@ -186,6 +187,7 @@ impl OrderManager {
             // Invalid information
             q: Box::new(()),
             maker: false,
+            reduce_only: order.reduce_only,
         };
         self.update_from_rest(asset_no, resp.client_order_id, order)
     }

@@ -9,9 +9,7 @@ use bincode::{
     de::{BorrowDecoder, Decoder},
     enc::Encoder,
     error::{DecodeError, EncodeError},
-    BorrowDecode,
-    Decode,
-    Encode,
+    BorrowDecode, Decode, Encode,
 };
 use dyn_clone::DynClone;
 use hftbacktest_derive::NpyDTyped;
@@ -514,6 +512,8 @@ pub struct Order {
     pub q: Box<dyn AnyClone + Send>,
     /// Whether the order is executed as a maker, only available when this order is executed.
     pub maker: bool,
+    /// Whether the order is reduce only order.
+    pub reduce_only: bool,
     pub order_type: OrdType,
     /// Request status:
     ///   * [`Status::New`]: Request to open a new order.
@@ -534,6 +534,7 @@ impl Order {
         side: Side,
         order_type: OrdType,
         time_in_force: TimeInForce,
+        reduce_only: bool,
     ) -> Self {
         Self {
             qty,
@@ -551,6 +552,7 @@ impl Order {
             order_id,
             q: Box::new(()),
             maker: false,
+            reduce_only,
             order_type,
         }
     }
@@ -651,6 +653,7 @@ impl Decode for Order {
             status: Decode::decode(decoder)?,
             side: Decode::decode(decoder)?,
             time_in_force: Decode::decode(decoder)?,
+            reduce_only: Decode::decode(decoder)?,
         })
     }
 }
@@ -675,6 +678,7 @@ impl<'de> BorrowDecode<'de> for Order {
             status: Decode::decode(decoder)?,
             side: Decode::decode(decoder)?,
             time_in_force: Decode::decode(decoder)?,
+            reduce_only: Decode::decode(decoder)?,
         })
     }
 }
@@ -753,6 +757,7 @@ pub struct OrderRequest {
     pub qty: f64,
     pub side: Side,
     pub time_in_force: TimeInForce,
+    pub reduce_only: bool,
     pub order_type: OrdType,
 }
 
@@ -821,6 +826,7 @@ where
         price: f64,
         qty: f64,
         time_in_force: TimeInForce,
+        reduce_only: bool,
         order_type: OrdType,
         wait: bool,
     ) -> Result<bool, Self::Error>;
@@ -847,6 +853,7 @@ where
         price: f64,
         qty: f64,
         time_in_force: TimeInForce,
+        reduce_only: bool,
         order_type: OrdType,
         wait: bool,
     ) -> Result<bool, Self::Error>;
@@ -944,12 +951,8 @@ mod tests {
     use crate::{
         prelude::LOCAL_EVENT,
         types::{
-            Event,
-            BUY_EVENT,
-            LOCAL_BID_DEPTH_CLEAR_EVENT,
-            LOCAL_BID_DEPTH_EVENT,
-            LOCAL_BID_DEPTH_SNAPSHOT_EVENT,
-            LOCAL_BUY_TRADE_EVENT,
+            Event, BUY_EVENT, LOCAL_BID_DEPTH_CLEAR_EVENT, LOCAL_BID_DEPTH_EVENT,
+            LOCAL_BID_DEPTH_SNAPSHOT_EVENT, LOCAL_BUY_TRADE_EVENT,
         },
     };
 

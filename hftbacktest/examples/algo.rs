@@ -107,6 +107,7 @@ where
                     order_price,
                     order_qty,
                     TimeInForce::GTX,
+                    false,
                     OrdType::Limit,
                     false,
                 )
@@ -153,6 +154,7 @@ where
                     order_price,
                     order_qty,
                     TimeInForce::GTX,
+                    true,
                     OrdType::Limit,
                     false,
                 )

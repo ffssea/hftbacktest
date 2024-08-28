@@ -15,23 +15,10 @@ use crate::{
     },
     depth::{L2MarketDepth, MarketDepth},
     types::{
-        Event,
-        OrdType,
-        Order,
-        OrderId,
-        Side,
-        StateValues,
-        Status,
-        TimeInForce,
-        LOCAL_ASK_DEPTH_CLEAR_EVENT,
-        LOCAL_ASK_DEPTH_EVENT,
-        LOCAL_ASK_DEPTH_SNAPSHOT_EVENT,
-        LOCAL_BID_DEPTH_CLEAR_EVENT,
-        LOCAL_BID_DEPTH_EVENT,
-        LOCAL_BID_DEPTH_SNAPSHOT_EVENT,
-        LOCAL_DEPTH_CLEAR_EVENT,
-        LOCAL_EVENT,
-        LOCAL_TRADE_EVENT,
+        Event, OrdType, Order, OrderId, Side, StateValues, Status, TimeInForce,
+        LOCAL_ASK_DEPTH_CLEAR_EVENT, LOCAL_ASK_DEPTH_EVENT, LOCAL_ASK_DEPTH_SNAPSHOT_EVENT,
+        LOCAL_BID_DEPTH_CLEAR_EVENT, LOCAL_BID_DEPTH_EVENT, LOCAL_BID_DEPTH_SNAPSHOT_EVENT,
+        LOCAL_DEPTH_CLEAR_EVENT, LOCAL_EVENT, LOCAL_TRADE_EVENT,
     },
 };
 
@@ -136,6 +123,7 @@ where
         qty: f64,
         order_type: OrdType,
         time_in_force: TimeInForce,
+        reduce_only: bool,
         current_timestamp: i64,
     ) -> Result<(), BacktestError> {
         if self.orders.contains_key(&order_id) {
@@ -151,6 +139,7 @@ where
             side,
             order_type,
             time_in_force,
+            reduce_only,
         );
         order.req = Status::New;
         order.local_timestamp = current_timestamp;

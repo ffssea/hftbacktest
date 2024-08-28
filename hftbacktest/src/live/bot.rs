@@ -19,23 +19,9 @@ use crate::{
     live::Asset,
     prelude::{OrderId, OrderRequest, WaitOrderResponse},
     types::{
-        Bot,
-        BuildError,
-        Event,
-        LiveError as ErrorEvent,
-        LiveError,
-        LiveEvent,
-        OrdType,
-        Order,
-        Request,
-        Side,
-        StateValues,
-        Status,
-        TimeInForce,
-        LOCAL_ASK_DEPTH_EVENT,
-        LOCAL_BID_DEPTH_EVENT,
-        LOCAL_BUY_TRADE_EVENT,
-        LOCAL_SELL_TRADE_EVENT,
+        Bot, BuildError, Event, LiveError as ErrorEvent, LiveError, LiveEvent, OrdType, Order,
+        Request, Side, StateValues, Status, TimeInForce, LOCAL_ASK_DEPTH_EVENT,
+        LOCAL_BID_DEPTH_EVENT, LOCAL_BUY_TRADE_EVENT, LOCAL_SELL_TRADE_EVENT,
     },
 };
 
@@ -464,6 +450,7 @@ where
         price: f64,
         qty: f64,
         time_in_force: TimeInForce,
+        reduce_only: bool,
         order_type: OrdType,
         wait: bool,
         side: Side,
@@ -494,6 +481,7 @@ where
             // Invalid information
             q: Box::new(()),
             maker: false,
+            reduce_only,
         };
         let order_id = order.order_id;
         orders.insert(order_id, order.clone());
@@ -572,6 +560,7 @@ where
         price: f64,
         qty: f64,
         time_in_force: TimeInForce,
+        reduce_only: bool,
         order_type: OrdType,
         wait: bool,
     ) -> Result<bool, Self::Error> {
@@ -581,6 +570,7 @@ where
             price,
             qty,
             time_in_force,
+            reduce_only,
             order_type,
             wait,
             Side::Buy,
@@ -595,6 +585,7 @@ where
         price: f64,
         qty: f64,
         time_in_force: TimeInForce,
+        reduce_only: bool,
         order_type: OrdType,
         wait: bool,
     ) -> Result<bool, Self::Error> {
@@ -604,6 +595,7 @@ where
             price,
             qty,
             time_in_force,
+            reduce_only,
             order_type,
             wait,
             Side::Sell,
@@ -622,6 +614,7 @@ where
             order.price,
             order.qty,
             order.time_in_force,
+            order.reduce_only,
             order.order_type,
             wait,
             order.side,

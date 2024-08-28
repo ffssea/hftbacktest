@@ -50,6 +50,7 @@ where
         qty: f64,
         order_type: OrdType,
         time_in_force: TimeInForce,
+        reduce_only: bool,
         current_timestamp: i64,
     ) -> Result<(), BacktestError>;
 
